@@ -1,0 +1,14 @@
+{
+  "name": "bds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "docker-compose up -d",
+    "postdev": "npm run server",
+    "stop": "docker-compose stop",
+    "down": "docker-compose down",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client"
+  }
+}
