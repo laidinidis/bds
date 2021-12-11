@@ -6,7 +6,7 @@ import { logout } from '../auth'
 const router = Router()
 
 router.get(
-  '/home',
+  '/me',
   auth,
   catchAsync(async (req, res) => {
     // res.json(await User.findById(req.session!.userId))

@@ -15,8 +15,10 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "@prisma/client": "^3.6.0",
+    "@types/cors": "^2.8.12",
     "bcryptjs": "^2.4.3",
     "connect-redis": "^6.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "ioredis": "^4.28.2"

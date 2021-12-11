@@ -1,5 +1,6 @@
 import express from 'express'
 import session, { Store } from 'express-session'
+import cors from 'cors'
 import { SESSION_OPTIONS } from './config'
 import { register, login, home } from './routes'
 import { serverError, notFound } from './middleware'
@@ -9,6 +10,11 @@ export const createApp = (store: Store) => {
   // remove x-powered-by header from headers
   app.disable('x-powered-by')
 
+  // allow cors
+  app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  }))
   // json requests handling
   app.use(express.json())
   // session middleware
