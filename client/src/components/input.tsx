@@ -1,33 +1,33 @@
-import { ChangeEvent, ChangeEventHandler, FC, HTMLInputTypeAttribute } from 'react'
+import { useField } from 'formik'
+import { FC } from 'react'
 
-interface Props {
-  value?: string
-  onChange?: ChangeEventHandler<HTMLInputElement> 
-  placeholder?: string
-  name?: string
+type Props = JSX.IntrinsicElements['input'] & {
   label?: string
-  type?: HTMLInputTypeAttribute
+  name: string
 }
 
-const Input: FC<Props> = ({ value, onChange, placeholder, name, label, type = 'text' }) => (
-  <div>
-    {label && (
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label}
-      </label>
-    )}
-    <div className="mt-1 relative rounded-md shadow-sm">
-      <input
-        type={type}
-        name={name}
-        id={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md mb-4"
-      />
+const Input: FC<Props> = ({ label, ...props }) => {
+  const [field, meta] = useField(props.name)
+  return (
+    <div className='mb-4'>
+      {label && (
+        <label
+          htmlFor={props.id || props.name}
+          className="block text-sm font-medium text-gray-700"
+        >
+          {label}
+        </label>
+      )}
+      <div className="my-1 relative rounded-md shadow-sm">
+        <input
+          {...field}
+          {...props}
+          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        />
+      </div>
+      {meta.touched && meta.error ? <div className="block text-sm font-medium text-red-500">{meta.error}</div> : null}
     </div>
-  </div>
-)
+  )
+}
 
 export default Input

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { SESSION_NAME } from './config'
-import { BadRequest, Unauthorized } from './errors'
-// import { User } from './models'
+import { BadRequest } from './errors'
+import prisma from './prisma'
 
 export const isLoggedIn = (req: Request) => !!req.session!.userId
 
@@ -18,28 +18,15 @@ export const checkLoggedOut = (req: Request) => {
 }
 
 export const checkExists = async (email: string) => {
-  // const userExists = await User.exists({ email })
-  const userExists = false
-  if (userExists) {
+  const userExists = await prisma.user.count({
+    where: { email }
+  })
+
+  if (userExists > 0) {
+    // Probably this is a confusing message for the users
+    // but we don't want to reveal that information, for security reasons, to a potential attacker
     throw new BadRequest('Invalid email')
   }
-}
-
-export const attemptLogIn = async (req: Request, args: any) => {
-  const { email, password } = args
-  // const user = await User.findOne({ email })
-  const user = {
-    id: 123456
-  }
-
-  if (
-    !user 
-    // || !(await user.matchesPassword(password))
-    ) {
-    throw new Unauthorized('Incorrect email or password')
-  }
-  login(req, user.id)
-  return user
 }
 
 export const login = (req: Request, userId: number) => {

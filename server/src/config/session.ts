@@ -3,7 +3,6 @@ import { IS_PROD } from './app'
 
 const ONE_HOUR = 1000 * 60 * 60
 const HALF_HOUR = ONE_HOUR / 2
-const SIX_HOURS = ONE_HOUR * 6
 
 export const {
   SESSION_SECRET = 'DGt8fHqMocpR2Rr6hxysAMu9WZ3nb5DejF8ywxcBzPbDxLg6WdfaL4aZg3G4K6d4',
