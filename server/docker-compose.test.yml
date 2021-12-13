@@ -1,0 +1,20 @@
+# Set the version of docker compose to use
+version: '3.9'
+
+services:
+  test_db:
+    image: postgres
+    restart: always
+    container_name: integration-tests-prisma
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: tests
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

@@ -1,12 +1,11 @@
 import { Router } from 'express'
-import { hash, compare } from 'bcryptjs'
+import { hash } from 'bcryptjs'
 
 import { registerSchema, validate } from '../validation'
 import { checkExists, login } from '../auth'
 import { ensureGuest, catchAsync } from '../middleware'
-import { BadRequest } from '../errors'
-import prisma from '../prisma'
 import { BCRYPT_WORK_FACTOR } from '../config'
+import { createUser } from '../prisma/user'
 
 const router = Router()
 
@@ -20,14 +19,7 @@ router.post(
     await checkExists(email)
 
     const hashedPassword = await hash(password, BCRYPT_WORK_FACTOR)
-
-    const user = await prisma.user.create({
-      data: {
-        email,
-        name,
-        password: hashedPassword
-      }
-    })
+    const user = await createUser({ name, email, password: hashedPassword })
 
     login(req, user.id)
 

@@ -7,7 +7,7 @@ export const isLoggedIn = (req: Request) => !!req.session!.userId
 
 export const checkLoggedIn = (req: Request) => {
   if (!isLoggedIn(req)) {
-    throw new Error('You must be logged in!')
+    throw new BadRequest('You must be logged in!')
   }
 }
 

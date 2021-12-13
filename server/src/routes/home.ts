@@ -1,8 +1,7 @@
 import { Router } from 'express'
 import { checkLoggedIn } from '../auth'
-import { BadRequest } from '../errors'
 import { auth, catchAsync } from '../middleware'
-import prisma from '../prisma'
+import { findUser } from '../prisma/user'
 
 const router = Router()
 
@@ -11,9 +10,9 @@ router.get(
   auth,
   catchAsync(async (req, res) => {
     checkLoggedIn(req)
-    const user = await prisma.user.findUnique({
-      where: { id: req.session!.userId }
-    })
+    // it will throw if the user is not logged in
+    // TODO: handle user not found
+    const user = req.session?.userId && await findUser(req.session.userId)
     res.json(user)
   })
 )
